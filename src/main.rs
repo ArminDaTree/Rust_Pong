@@ -1,7 +1,6 @@
 use tetra::graphics::{self, Color, Rectangle, Texture};
 use tetra::input::{self, Key};
 use tetra::math::Vec2;
-use tetra::window;
 use tetra::{Context, ContextBuilder, State};
 use tetra::audio::{Sound};
 use tetra::graphics::text::{Font, Text};
@@ -71,7 +70,7 @@ struct GameState {
     player2: Entity,
     ball: Entity,
     sound: Sound,
-    winText: Text,
+    win_text: Text,
 }
 
 impl GameState {
@@ -100,7 +99,7 @@ impl GameState {
         let player2 = Entity::new(player2_texture, player2_position);
         let ball =Entity::with_velocity(ball_texture, ball_position, ball_velocity);
         let sound = Sound::new("./resources/pong.wav")?;
-        let winText = Text::new("lorem ipsum",
+        let win_text = Text::new("lorem ipsum",
             Font::vector(ctx, "./resources/LEMONMILK-Regular.ttf", 16.0)?,
         );
 
@@ -110,7 +109,7 @@ impl GameState {
             player2,
             ball,
             sound,
-            winText,
+            win_text,
         })
     }
 }
@@ -189,13 +188,13 @@ impl State for GameState {
         self.player2.texture.draw(ctx, self.player2.position);
         self.ball.texture.draw(ctx, self.ball.position);
         if self.ball.position.x < 0.0 {
-            self.winText.set_content("Player 2 win ! \nPress enter to play again");
-            self.winText.draw(ctx, TEXT_POS);
+            self.win_text.set_content("Player 2 win ! \nPress enter to play again");
+            self.win_text.draw(ctx, TEXT_POS);
         }
 
         if self.ball.position.x > WINDOW_WIDTH {
-            self.winText.set_content("Player 1 win ! \nPress enter to play again");
-            self.winText.draw(ctx, TEXT_POS);
+            self.win_text.set_content("Player 1 win ! \nPress enter to play again");
+            self.win_text.draw(ctx, TEXT_POS);
         }
         Ok(())
     }
